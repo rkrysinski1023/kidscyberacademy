@@ -1,0 +1,18 @@
+<!--.ejs file for the Student Login. Doesnt use email, has a username and password section.-->
+<h1 style="color:#FBFF46;">Student Login</h1>
+<html>
+<body style=" background-color: #154051;">
+<form action "/student_login" method="POST">
+    <div>
+        <label for="userName" style="color:#FBFF46;">UserName:</label>
+        <input type="text" id="userName" name="userName" required>
+    </div>
+    <div>
+        <label for="password" style="color:#FBFF46;">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Login</button>
+</form>
+
+<a href="/student_signup" style="color:#FBFF46;">Student SignUp</a>
+<html>

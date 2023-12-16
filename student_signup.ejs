@@ -1,0 +1,29 @@
+<!--.ejs file for the Student Signup. This is where students will be asked to input information to create an account-->
+<h1 style="color:#FBFF46;">Student SignUp</h1>
+<html>
+<body style=" background-color: #154051;">
+<form action "/student_signup" method="POST">
+    <div>
+        <label for="userName" style="color:#FBFF46;">UserName:</label>
+        <input type="text" id="userName" name="userName" required>
+    </div>
+    <div>
+        <label for="password" style="color:#FBFF46;">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="passwordCheck" style="color:#FBFF46;">RePassword:</label>
+        <input type="passwordcheck" id="passwordCheck" name="passwordCheck" required>
+    </div>
+    <div>
+        <label for="email" style="color:#FBFF46;">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <button type="submit">Create Account</button>
+</form>
+
+<a href="/student_login" style="color:#FBFF46;">Student Login</a>
+
+
+<html>
+    <img src=“” alt=“Agent”>
