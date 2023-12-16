@@ -5,8 +5,7 @@
 //This code runs on node.js, which connects to an express server and allows the user to login, save the username and password, and keeps in encrypted until it is decrypted to check
 // This code is built upon a view on creating a Passport Node JS login https://www.youtube.com/watch?v=-RCnNyD0L-s, however I have added my own design, pages, and attributes into my 
 // own unqiue version
-//NOTE This code does not currently work without the node_modules file. this is a huge files from a bunch of libraries that I wasnt sure if to add to git or not. If you need it to test the code, lmk.
-// libraries and file calls
+//NOTE This code does not currently work without the node_modules file. This should be fine since I have a package.json file but lmk if you do need it.
 const express = require('express') //Temp server, will intergrate with Wix by the end of project
 const flash = require('express-flash')
 const session = require('express-session')
