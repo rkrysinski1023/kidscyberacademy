@@ -1,20 +1,21 @@
 //Kyle Johnson
 //KidsCyberAcademy Login-Code
+//Beta. Very simplistic will be changing to work in Wix at a later date, main usage is to facilitate login and encryption processes. 
 //This code runs on node.js, which connects to an express server and allows the user to login, save the username and password, and keeps in encrypted until it is decrypted to check 
 
-
-
-const express = require('express')
-const app = express()
-const bcrypt = require('bcrypt')
-const passportID = require('passport')
+// libraries and file calls
+const express = require('express') //Temp server, will intergrate with Wix by the end of project
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const app = express()// This also
+const bcrypt = require('bcrypt')
+const passportID = require('passport')
 
 if (process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
 }
+
 //Connect this to a databse, do not leave for final project
 const users = []
 
@@ -26,7 +27,8 @@ initPassport(passportID, email =>
 )
 
 //------------------------------------------
-
+//Creates a session for each passport attempt
+//Change it to a personal session with a session id
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({extended: false}))
 app.use(flash())
@@ -39,31 +41,40 @@ app.use(passportID.initialize())
 app.use(passportID.session())
 app.use(methodOverride('_method'))
 
-//----
-app.get('/', checkAuth, (req, res) => {
+
+app.get('/', ifAuth, (req, res) => {
     res.render('index.ejs', {name: req.user.name})
 })
-//----
 
+
+//Different calls when the page is needed to then pull up the html .ejs file for that page
 app.get('/loginChoice', (req, res) => {
     res.render('loginChoice.ejs')
 })
 app.get('/student_login', (req, res) => {
     res.render('student_login.ejs')
 })
-app.get('/teacher_login', checkNotAuth,(req, res) => {
+app.get('/teacher_login', ifAuthCurrent,(req, res) => {
     res.render('teacher_login.ejs')
 })
 app.get('/student_signup', (req, res) => {
     res.render('student_signup.ejs')
 })
-app.get('/teacher_signup', checkNotAuth,(req, res) => {
+app.get('/teacher_signup', ifAuthCurrent,(req, res) => {
     res.render('teacher_signup.ejs')
 })
-app.post('/student_login', (req, res) => {
-    req.body.userName
-    req.body.password
-})
+
+//calls for requests and responses to inputs on the pages. 
+//app.post('/student_login', (req, res) => {
+    //req.body.userName
+  //  req.body.password
+//})
+
+app.post('/student_login', ifAuthCurrent,passportID.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/student_login',
+    failureFlash: true
+}))
 app.post('/student_signup', async(req, res) => {
     
     try{
@@ -71,14 +82,14 @@ app.post('/student_signup', async(req, res) => {
         //req.body.password
         //req.body.passwordCheck
         //check if they are the same before you run
-
+        //hash the password when obtained, this is the value that will be kept in the database, not the plaintext
         const hashPSWD = await bcrypt.hash(req.body.password, 15)
         //change when working with database
         users.push({
-            id: Date.now().toString(), 
+            id: Date.now().toString(), //Id is a call to date pushed to a string value. Will also add a random value character 
             name: req.body.userName,
-            password: hashPSWD,
-            email: req.body.email
+            password: hashPSWD, //Hashed password, never plaintext
+            email: req.body.email 
             
         })
         res.redirect('/student_login')
@@ -87,12 +98,12 @@ app.post('/student_signup', async(req, res) => {
     }  
     console.log(users)
 })
-app.post('/teacher_login', checkNotAuth,passportID.authenticate('local', {
+app.post('/teacher_login', ifAuthCurrent,passportID.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/teacher_login',
     failureFlash: true
 }))
-app.post('/teacher_signup', checkNotAuth,async(req, res) => {
+app.post('/teacher_signup', ifAuthCurrent,async(req, res) => {
     try{
         //add part  for password checker
         //req.body.password
@@ -120,7 +131,7 @@ app.post('/teacher_signup', checkNotAuth,async(req, res) => {
     req.body.email
     req.body.school
 })
-
+//Simple logout button, will change later
 app.delete('/logout', (req, res, next) =>{
     req.logOut((err)=>{
         if (err){
@@ -131,20 +142,21 @@ app.delete('/logout', (req, res, next) =>{
 })
 
     
-
-function checkAuth(req, res, next) {
+//Check if the user is authenticated. If they are not, instead of just going to any link they want, it will send them to the login page. #Change to login choice page#
+function ifAuth(req, res, next) {
     if (req.isAuthenticated()){
         return next()
     }
 
     res.redirect('/teacher_login')
 }
-function checkNotAuth(req, res, next){
+//Check if the authenticated. IF they are, makes sure they cannot go back to a page if they are already logined in. 
+function ifAuthCurrent(req, res, next){
     if (req.isAuthenticated()){
         return res.redirect('/')
     }
     next()
 }
 
-
+//Temp server host http://localhost:3000/ via express
 app.listen(3000)

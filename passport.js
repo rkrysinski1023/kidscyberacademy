@@ -1,3 +1,5 @@
+//Passport.js
+//This file is used to authenticate each section of the login. It is the middleware between our database and the login prompts and does a simple check. 
 const Strat = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 /*
