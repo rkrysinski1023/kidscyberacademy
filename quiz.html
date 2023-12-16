@@ -39,6 +39,7 @@
         button:hover {
             background-color: #45a049;
         }
+        <!-- This is for the pie chart widget -->
         canvas {
             margin-top: 20px;
             max-width: 300px;
@@ -47,7 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
+<!-- Class defining the actual quiz questions -->
 <div class="quiz-container">
     <div class="question" id="questionone">
         <h2>Question 1: Who is the Caesar Cipher named for?</h2>
@@ -84,7 +85,7 @@
         const questions = document.querySelectorAll('.question');
         let correctAnswers = 0;
         let incorrectAnswers = 0;
-
+        <!-- Function iteratively checks user input to add up correct and incorrect answers -->
         questions.forEach(question => {
             const selectedOption = question.querySelector('input:checked');
             if (selectedOption) {
@@ -102,6 +103,7 @@
     }
 
     function getCorrectAnswer(questionId) {
+        <!-- Helper function that maps the correct answers -->
         const correctAnswersMap = {
             'one': 'a',
             'two': 'b',
@@ -113,7 +115,7 @@
 
     function displayChart(correctAnswers, incorrectAnswers) {
         const ctx = document.getElementById('quizChart').getContext('2d');
-
+        <!-- This is imported from a library and renders the pie chart displayed at the end of the quiz -->
         new Chart(ctx, {
             type: 'pie',
             data: {
