@@ -1,0 +1,22 @@
+//Kyle Johnson
+//This code reads out the text on a webpage and also outputs the text as a voice
+//This is used to text that the text on the website can be read through a text editor for 
+//the visually impaired.
+//Maybe be used for a website text reader.
+//----------------------------------------------------
+let websiteText = new SpeechSynthesisUtterance();
+let HTMLtag = document.querySelectorAll('p,a,h1,h2,h3');
+let voices = speechSynthesis.getVoices();
+websiteText.voice = voices[1];
+//----------------------------------------------------
+HTMLtag.forEach((tag)=>{
+tag.addEventListener('click', (e)=>{
+let elementType = e.target.tagName.toLowerCase();
+
+websiteText.text = e.target.innerText;
+tag.style.backgroundColor = "red";
+speechSynthesis.speak(websiteText);
+        
+console.log("Reading:",elementType + ":", websiteText.text);     
+});
+});
