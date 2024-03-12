@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Widget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        canvas {
+            margin-top: 20px;
+            max-width: 300px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="quiz-container">
+        <div class="question" id="questionone">
+            <h2>Question 1: What is spam?</h2>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q1" value="a"> a) Unwanted Emails</li>
+                <li class="option"><input type="radio" name="q1" value="b"> b) A Type of Scam</li>
+                <li class="option"><input type="radio" name="q1" value="c"> c) A Video Game</li>
+            </ul>
+        </div>
+
+        <div class="question" id="questiontwo">
+            <h2>Question 2: What is the point of Social Engineering?</h2>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q2" value="a"> a) To trick you into giving info</li>
+                <li class="option"><input type="radio" name="q2" value="b"> b) To sell you stuff</li>
+                <li class="option"><input type="radio" name="q2" value="c"> c) To fix your computer</li>
+            </ul>
+        </div>
+
+        <div class="question" id="questionthree">
+            <h2>Question 3: Why is it a good idea to give less personal info online?</h2>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q3" value="a"> a) Hackers have less ways to attack you </li>
+                <li class="option"><input type="radio" name="q3" value="b"> b) You can hack more people</li>
+                <li class="option"><input type="radio" name="q3" value="c"> c) There is no reason to do this</li>
+            </ul>
+        </div>
+
+        <button onclick="submitQuiz()">Submit Answers</button>
+
+        <canvas id="quizChart"></canvas>
+
+        <script>
+            async function submitQuiz() {
+                const questions = document.querySelectorAll('.question');
+                let correctAnswers = 0;
+                let incorrectAnswers = 0;
+
+                for (const question of questions) {
+                    const selectedOption = question.querySelector('input:checked');
+                    if (selectedOption) {
+                        const questionId = selectedOption.name.slice(1); // Remove the 'q' prefix
+                        const correctAnswer = await getCorrectAnswer(questionId);
+
+                        if (selectedOption.value.toLowerCase() === correctAnswer.toLowerCase()) {
+                            correctAnswers++;
+                        } else {
+                            incorrectAnswers++;
+                        }
+                    }
+                }
+
+                alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
+                displayChart(correctAnswers, incorrectAnswers);
+            }
+
+            async function getCorrectAnswer(questionId) {
+                try {
+                    
+                    const result = { items: [{ correctAnswer: 'a' }] };
+                    const correctAnswer = result.items[0].correctAnswer;
+                    return correctAnswer;
+                } catch (error) {
+                    alert(`Could not find correct answers`);
+                    return null;
+                }
+            }
+
+            function displayChart(correctAnswers, incorrectAnswers) {
+                const ctx = document.getElementById('quizChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Correct Answers', 'Incorrect Answers'],
+                        datasets: [{
+                            data: [correctAnswers, incorrectAnswers],
+                            backgroundColor: ['#4CAF50', '#FF5733']
+                        }]
+                    }
+                });
+            }
+        </script>
+    </div>
+
+</body>
+
+</html>
