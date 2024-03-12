@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +40,7 @@
         button:hover {
             background-color: #45a049;
         }
-        <!-- This is for the pie chart widget -->
+
         canvas {
             margin-top: 20px;
             max-width: 300px;
@@ -47,87 +48,93 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-<!-- Class defining the actual quiz questions -->
-<div class="quiz-container">
-    <div class="question" id="questionone">
-        <h2>Question 1: Who is the Caesar Cipher named for?</h2>
-        <ul class="options">
-            <li class="option"><input type="radio" name="q1" value="a"> a) Julius Caesar</li>
-            <li class="option"><input type="radio" name="q1" value="b"> b) Caesar Chavez</li>
-            <li class="option"><input type="radio" name="q1" value="c"> c) Little Caesar</li>
-        </ul>
-    </div>
 
-    <div class="question" id="questiontwo">
-        <h2>Question 2: What is the range of the Caesar Cipher?</h2>
-        <ul class="options">
-            <li class="option"><input type="radio" name="q2" value="a"> a) 0 to 25</li>
-            <li class="option"><input type="radio" name="q2" value="b"> b) 1 to 26</li>
-            <li class="option"><input type="radio" name="q2" value="c"> c) 1 to 13</li>
-        </ul>
-    </div>
+    <div class="quiz-container">
+        <div class="question" id="questionone">
+            <h2>Question 1: Who is the Caesar Cipher named for?</h2>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q1" value="a"> a) Julius Caesar</li>
+                <li class="option"><input type="radio" name="q1" value="b"> b) Caesar Chavez</li>
+                <li class="option"><input type="radio" name="q1" value="c"> c) Little Caesar</li>
+            </ul>
+        </div>
 
-    <div class="question" id="questionthree">
-        <h2>Question 3: What is a brute force attack?</h2>
-        <ul class="options">
-            <li class="option"><input type="radio" name="q3" value="a"> a) Attackers try every combination to break the cipher</li>
-            <li class="option"><input type="radio" name="q3" value="b"> b) Attackers use a super complicated algorithm to break in</li>
-            <li class="option"><input type="radio" name="q3" value="c"> c) Attackers attack the computer with a blunt instrument</li>
-        </ul>
-    </div>
+        <div class="question" id="questiontwo">
+            <h2>Question 2: What is the range of the Caesar Cipher?</h2>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q2" value="a"> a) 0 to 25</li>
+                <li class="option"><input type="radio" name="q2" value="b"> b) 1 to 26</li>
+                <li class="option"><input type="radio" name="q2" value="c"> c) 1 to 13</li>
+            </ul>
+        </div>
 
-    <button onclick="submitQuiz()">Submit Answers</button>
-</div>
+        <div class="question" id="questionthree">
+            <h2>Question 3: What is a brute force attack?</h2>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q3" value="a"> a) Attackers try every combination to break the cipher</li>
+                <li class="option"><input type="radio" name="q3" value="b"> b) Attackers use a super complicated algorithm to break in</li>
+                <li class="option"><input type="radio" name="q3" value="c"> c) Attackers attack the computer with a blunt instrument</li>
+            </ul>
+        </div>
 
-<script>
-    function submitQuiz() {
-        const questions = document.querySelectorAll('.question');
-        let correctAnswers = 0;
-        let incorrectAnswers = 0;
-        <!-- Function iteratively checks user input to add up correct and incorrect answers -->
-        questions.forEach(question => {
-            const selectedOption = question.querySelector('input:checked');
-            if (selectedOption) {
-                const questionId = selectedOption.name.slice(1); // Remove the 'q' prefix
-                const correctAnswer = getCorrectAnswer(questionId);
-                if (selectedOption.value === correctAnswer) {
-                    correctAnswers++;
-                } else {
-                    incorrectAnswers++;
+        <button onclick="submitQuiz()">Submit Answers</button>
+
+        <canvas id="quizChart"></canvas>
+
+        <script>
+            async function submitQuiz() {
+                const questions = document.querySelectorAll('.question');
+                let correctAnswers = 0;
+                let incorrectAnswers = 0;
+
+                for (const question of questions) {
+                    const selectedOption = question.querySelector('input:checked');
+                    if (selectedOption) {
+                        const questionId = selectedOption.name.slice(1); // Remove the 'q' prefix
+                        const correctAnswer = await getCorrectAnswer(questionId);
+
+                        if (selectedOption.value.toLowerCase() === correctAnswer.toLowerCase()) {
+                            correctAnswers++;
+                        } else {
+                            incorrectAnswers++;
+                        }
+                    }
+                }
+
+                alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
+                displayChart(correctAnswers, incorrectAnswers);
+            }
+
+            async function getCorrectAnswer(questionId) {
+                try {
+                    const result = { items: [{ correctAnswer: 'a' }] };
+                    const correctAnswer = result.items[0].correctAnswer;
+                    return correctAnswer;
+                } catch (error) {
+                    alert(`Could not find correct answers`);
+                    return null;
                 }
             }
-        });
-        alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
-        displayChart(correctAnswers, incorrectAnswers);
-    }
 
-    function getCorrectAnswer(questionId) {
-        <!-- Helper function that maps the correct answers -->
-        const correctAnswersMap = {
-            'one': 'a',
-            'two': 'b',
-            'three': 'a'
-        };
+            function displayChart(correctAnswers, incorrectAnswers) {
+                const ctx = document.getElementById('quizChart').getContext('2d');
 
-        return correctAnswersMap[questionId];
-    }
-
-    function displayChart(correctAnswers, incorrectAnswers) {
-        const ctx = document.getElementById('quizChart').getContext('2d');
-        <!-- This is imported from a library and renders the pie chart displayed at the end of the quiz -->
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Correct Answers', 'Incorrect Answers'],
-                datasets: [{
-                    data: [correctAnswers, incorrectAnswers],
-                    backgroundColor: ['#4CAF50', '#FF5733']
-                }]
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Correct Answers', 'Incorrect Answers'],
+                        datasets: [{
+                            data: [correctAnswers, incorrectAnswers],
+                            backgroundColor: ['#4CAF50', '#FF5733']
+                        }]
+                    }
+                });
             }
-        });
-    }
-</script>
+        </script>
+    </div>
 
 </body>
+
 </html>
