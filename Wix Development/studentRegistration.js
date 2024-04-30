@@ -4,6 +4,7 @@
 import { authentication } from 'wix-members';
 import wixData from 'wix-data';
 import wixLocation from 'wix-location';
+import {assignRole} from 'backend/roleAssign';
 
 $w.onReady(function () {
 
@@ -91,23 +92,39 @@ const passwordChecker = (passwordInput) =>{
         authentication.register(email, password, options)
             .then((registrationResult) => {
 
-                wixData.insert(mainData, toInsert)
-                    .then((item) => {
-                        console.log(item);
+            
+                const memberIds =  registrationResult.member._id;
+                const roleId = '49c0d991-78a6-4adc-875c-5a43a7d5aff1';
+            
 
+                console.log("Reached here before function call");
+
+                assignRole(roleId, memberIds)
+                    .then((roleAssigned) => {
+                        console.log(roleAssigned);
+                        console.log("Assigned")
+                        wixData.insert(mainData, toInsert)
+                            .then((item) => {
+                                console.log(item);
+                                console.log("CMS Success")
+                            })
+                            .catch((error) => {
+                                console.log("CMS error");
+                            });
+
+                        console.log(registrationResult.member);
+                        $w("#successMessage").text = "Member registered";
+                        $w("#successMessage").show();
+                        wixLocation.to("/home");
                     })
-                    .catch((err) =>{
-                        console.log("CMS error");
-                    });
+                    .catch((error) => {
+                        console.log("Role assignment Error:", error);
+                    })
 
-                console.log(registrationResult.member);
-                $w("#successMessage").text = "Member registered";
-                $w("#successMessage").show();
-                wixLocation.to("/home");
             })
             .catch((error) => {
                 console.error(error);
-                $w("#errorMessage").text ="There was an error, try again later";
+                $w("#errorMessage").text = "There was an error, try again later";
                 $w("#errorMessage").show();
             })
     }
