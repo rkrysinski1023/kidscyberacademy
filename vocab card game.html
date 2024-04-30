@@ -1,0 +1,146 @@
+<style type ="text/css">
+.memory-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 200px;
+  height: 300px;
+  border: 4px solid white;
+  background-color: #fbff46;
+  cursor: pointer;
+  perspective: 1000px;
+  margin: 10px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.card-front {
+  background-color: #fbff46;
+}
+
+.card-back {
+  background-color: #fbff46;
+  transform: rotateY(180deg);
+}
+
+#next-btn {
+  background-color: #163f4a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+
+</style>>
+
+<body style="background-color: #281a39;">
+  <div class="memory-game">
+    <div class="card-container">
+      <button class="card" data-term="Caesar Cipher">
+        <div class="card-inner">
+          <div class="card-front">Caesar Cipher</div>
+          <div class="card-back">A code Julius Caesar used for his troops</div>
+        </div>
+      </button>
+      <button class="card" data-term="Encryption">
+        <div class="card-inner">
+          <div class="card-front">Encryption</div>
+          <div class="card-back">hiding information so that only those with secret knowledge know it (a verb use of cryptography)</div>
+        </div>
+      </button>
+      <button class="card" data-term="Cryptography">
+        <div class="card-inner">
+          <div class="card-front">Cryptography</div>
+          <div class="card-back">the process of hiding or coding information so that only the person a message was intended for can read it (noun)</div>
+        </div>
+      </button>
+      <button class="card" data-term="Shift">
+        <div class="card-inner">
+          <div class="card-front">Shift</div>
+          <div class="card-back">Moving the alphabet over so that it equals another letter of the alphabet
+</div>
+        </div>
+      </button>
+      <button class="card" data-term="Decryption">
+        <div class="card-inner">
+          <div class="card-front">Decryption</div>
+          <div class="card-back">revealing secret knowledge
+</div>
+        </div>
+      </button>
+      <button class="card" data-term="Syntax">
+        <div class="card-inner">
+          <div class="card-front">Syntax</div>
+          <div class="card-back">Looking at how punctuation or placement of words create meaning in a sentence</div>
+        </div>
+      </button>
+    </div>
+     <img src="https://static.wixstatic.com/media/a339cf_fc1238f4bd114187bbb1288405d172e0~mv2.png" alt="Image" width="200">
+    <button id="next-btn">Next Card</button>
+  </div>
+</body>
+
+  <script>
+const cards = document.querySelectorAll('.card');
+const cardContainer = document.querySelector('.card-container');
+const nextButton = document.getElementById('next-btn');
+let currentIndex = 0;
+
+//index of cards
+cards.forEach((card, index) => {
+  if (index !== currentIndex) {
+    card.style.display = 'none';
+  }
+});
+
+//a simple button th toggle the next card
+nextButton.addEventListener('click', () => {
+  cards[currentIndex].style.display = 'none';
+  currentIndex = (currentIndex + 1) % cards.length;
+  cards[currentIndex].style.display = 'block';
+});
+
+//Allows the user to click on the card and flip it
+
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('is-flipped');
+  });
+});
+  </script>
+
