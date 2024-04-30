@@ -1,0 +1,19 @@
+//Written by James
+//https://www.wix.com/velo/reference/wix-members-backend/badges/assignmembers
+
+
+import { badges } from 'wix-members-backend';
+
+export function badgeAssign(badgeId, currentUserId) {
+
+    const memberIds = [currentUserId];
+
+  return badges.assignMembers(badgeId, memberIds)
+    .then((assignedMembers) => {
+      return assignedMembers;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
