@@ -1,16 +1,18 @@
-// Velo API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-//Written by James Looney
+//Written by James L.
+import wixData from 'wix-data';
 
-$w.onReady(function () {
+$w.onReady(async function () {
+    try {
+        const student = await wixData.query("MainDatabase").eq("isStudent", true).find();
+        if (student.items.length > 0) {
+            console.log(student);
+        } else {
+            console.log("No students found");
 
-	// Write your Javascript code here using the Velo framework API
+        }
+    } catch (error) {
+        console.log("Error:", error);
 
-	// Print hello world:
-	// console.log("Hello world!");
-
-	// Call functions on page elements, e.g.:
-	// $w("#button1").label = "Click me!";
-
-	// Click "Run", or Preview your site, to execute your code
+    }
 
 });

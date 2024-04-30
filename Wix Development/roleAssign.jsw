@@ -1,0 +1,33 @@
+//Written by James Looney
+//https://www.wix.com/velo/reference/wix-members-backend/authorization/removerole
+import { authorization } from 'wix-members-backend';
+
+export function assignRole(roleId, memberId) {
+ 
+  const options = {
+    suppressAuth: true
+  };
+
+  return authorization.assignRole(roleId, memberId, options)
+    .then(() => {
+      console.log("Role assigned to member");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+
+export function removeRole(roleId, memberId) {
+  const options = {
+    suppressAuth: false
+  };
+
+  return authorization.removeRole(roleId, memberId, options)
+    .then(() => {
+      console.log("Role removed from member");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
