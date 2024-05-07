@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Security Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        canvas {
+            margin-top: 20px;
+            max-width: 300px;
+        }
+
+        /* Dropdown menu style */
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="quiz-container">
+        <div class="question" id="question1">
+            <h2>Question 1: What is the purpose of a VPN?</h2>
+            <select id="q1">
+                <option value="">Select your answer</option>
+                <option value="a">a) To create a secure and encrypted connection over a public network</option>
+                <option value="b">b) To enhance the speed of internet connection</option>
+                <option value="c">c) To block unwanted websites</option>
+            </select>
+        </div>
+
+        <!-- Add more questions here with the same format -->
+        <div class="question" id="question2">
+            <h2>Question 2: What does WPA stand for in WiFi security?</h2>
+            <select id="q2">
+                <option value="">Select your answer</option>
+                <option value="a">a) Wi-Fi Protected Access</option>
+                <option value="b">b) Wireless Personal Access</option>
+                <option value="c">c) Wireless Public Access</option>
+            </select>
+        </div>
+
+        <div class="question" id="question3">
+            <h2>Question 3: What is a man-in-the-middle attack?</h2>
+            <select id="q3">
+                <option value="">Select your answer</option>
+                <option value="a">a) A cyber attack where the attacker intercepts communication between two parties</option>
+                <option value="b">b) A type of VPN</option>
+                <option value="c">c) A method to increase network speed</option>
+            </select>
+        </div>
+
+        <!-- Add more questions here with the same format -->
+        <div class="question" id="question4">
+            <h2>Question 4: What is the purpose of MAC filtering in WiFi security?</h2>
+            <select id="q4">
+                <option value="">Select your answer</option>
+                <option value="a">a) To allow only specific devices to connect to the network based on their MAC addresses</option>
+                <option value="b">b) To filter unwanted emails</option>
+                <option value="c">c) To increase network bandwidth</option>
+            </select>
+        </div>
+
+        <div class="question" id="question5">
+            <h2>Question 5: Which encryption protocol is commonly used in WPA2?</h2>
+            <select id="q5">
+                <option value="">Select your answer</option>
+                <option value="a">a) AES (Advanced Encryption Standard)</option>
+                <option value="b">b) DES (Data Encryption Standard)</option>
+                <option value="c">c) SSL (Secure Sockets Layer)</option>
+            </select>
+        </div>
+
+        <div class="question" id="question6">
+            <h2>Question 6: What is the main advantage of using a VPN?</h2>
+            <select id="q6">
+                <option value="">Select your answer</option>
+                <option value="a">a) Secure connection over untrusted networks</option>
+                <option value="b">b) Faster internet speed</option>
+                <option value="c">c) Access to restricted websites</option>
+            </select>
+        </div>
+
+        <div class="question" id="question7">
+            <h2>Question 7: What is SSID hiding in WiFi networks?</h2>
+            <select id="q7">
+                <option value="">Select your answer</option>
+                <option value="a">a) Disabling the broadcast of network name</option>
+                <option value="b">b) Enhancing network security</option>
+                <option value="c">c) Increasing network bandwidth</option>
+            </select>
+        </div>
+
+        <div class="question" id="question8">
+            <h2>Question 8: What is a VPN tunnel?</h2>
+            <select id="q8">
+                <option value="">Select your answer</option>
+                <option value="a">a) Encrypted connection between user and VPN server</option>
+                <option value="b">b) A physical connection between two networks</option>
+                <option value="c">c) A secure Wi-Fi network</option>
+            </select>
+        </div>
+
+        <div class="question" id="question9">
+            <h2>Question 9: What is the purpose of HTTPS in web browsing?</h2>
+            <select id="q9">
+                <option value="">Select your answer</option>
+                <option value="a">a) Secure communication between web browser and server</option>
+                <option value="b">b) Increasing web page loading speed</option>
+                <option value="c">c) Blocking malicious websites</option>
+            </select>
+        </div>
+
+        <div class="question" id="question10">
+            <h2>Question 10: What is the difference between HTTP and HTTPS?</h2>
+            <select id="q10">
+                <option value="">Select your answer</option>
+                <option value="a">a) HTTPS encrypts data transmitted between browser and server, HTTP does not</option>
+                <option value="b">b) HTTPS is faster than HTTP</option>
+                <option value="c">c) HTTPS is used for static websites, HTTP for dynamic websites</option>
+            </select>
+        </div>
+
+        <!-- Add more questions here with the same format -->
+
+        <!-- Button to submit answers -->
+        <button onclick="submitQuiz()">Submit Answers</button>
+
+        <!-- Chart to display quiz results -->
+        <canvas id="quizChart"></canvas>
+
+        <!-- JavaScript code -->
+        <script>
+            async function submitQuiz() {
+                const questions = document.querySelectorAll('.question');
+                let correctAnswers = 0;
+                let incorrectAnswers = 0;
+
+                questions.forEach(question => {
+                    const selectedOption = question.querySelector('select').value;
+                    if (selectedOption) {
+                        const questionId = question.id.slice(8); // Remove the 'question' prefix
+                        const correctAnswer = getCorrectAnswer(questionId);
+
+                        if (selectedOption === correctAnswer) {
+                            correctAnswers++;
+                        } else {
+                            incorrectAnswers++;
+                        }
+                    }
+                });
+
+                alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
+                displayChart(correctAnswers, incorrectAnswers);
+            }
+
+            function getCorrectAnswer(questionId) {
+                // Simulated correct answers
+                const correctAnswers = {
+                    "1": "a",
+                    "2": "a",
+                    "3": "a",
+                    "4": "a",
+                    "5": "a",
+                    "6": "a",
+                    "7": "a",
+                    "8": "a",
+                    "9": "a",
+                    "10": "a"
+                    // Add more correct answers here
+                };
+                return correctAnswers[questionId];
+            }
+
+            function displayChart(correctAnswers, incorrectAnswers) {
+                const ctx = document.getElementById('quizChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Correct Answers', 'Incorrect Answers'],
+                        datasets: [{
+                            data: [correctAnswers, incorrectAnswers],
+                            backgroundColor: ['#4CAF50', '#FF5733']
+                        }]
+                    }
+                });
+            }
+        </script>
+    </div>
+
+</body>
+
+</html>
