@@ -57,7 +57,7 @@
                 const selectedOption = question.querySelector('input:checked');
                 if (selectedOption) {
                     const questionId = selectedOption.name.slice(1); // Remove the 'q' prefix
-                    const correctAnswer = await getCorrectAnswer(questionId);
+                    const correctAnswer = await getCorrectAnswerFromDatabase(questionId);
 
                     if (selectedOption.value.toLowerCase() === correctAnswer.toLowerCase()) {
                         correctAnswers++;
@@ -67,34 +67,41 @@
                 }
             }
 
+            recordScore(correctAnswers, incorrectAnswers); // Record the score to the database
             alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
             displayChart(correctAnswers, incorrectAnswers);
         }
 
-        async function getCorrectAnswer(questionId) {
-            // In a real scenario, you would fetch the correct answers from a database or an API
-            // For demonstration, returning a hardcoded correct answer based on question ID
-            const correctAnswers = {
-                q1: 'a',
-                q2: 'a',
-                q3: 'a',
-                q4: 'b',
-                q5: 'c',
-                q6: 'a',
-                q7: 'b',
-                q8: 'c',
-                q9: 'a',
-                q10: 'b',
-                q11: 'c',
-                q12: 'a',
-                q13: 'b',
-                q14: 'c',
-                q15: 'a',
-                q16: 'b',
-                q17: 'c',
-                // Add more correct answers as needed
-            };
-            return correctAnswers[questionId];
+        async function getCorrectAnswerFromDatabase(questionId) {
+            try {
+                // Fetch correct answer from Wix backend database
+                const response = await fetch(`backend-url/quiz/${questionId}`); // Replace 'backend-url' with your actual backend URL
+                const data = await response.json();
+                return data.correctAnswer;
+            } catch (error) {
+                console.error("Error fetching correct answer:", error);
+                return null;
+            }
+        }
+
+        async function recordScore(correctAnswers, incorrectAnswers) {
+            try {
+                const response = await fetch('backend-url/answers', { // Replace 'backend-url' with your actual backend URL
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ correctAnswers, incorrectAnswers })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to record score');
+                }
+
+                console.log("Score recorded successfully.");
+            } catch (error) {
+                console.error("Error recording score:", error);
+            }
         }
 
         function displayChart(correctAnswers, incorrectAnswers) {
