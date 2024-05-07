@@ -16,13 +16,22 @@
             margin: auto;
         }
 
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
         .question {
-            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .options {
             list-style-type: none;
             padding: 0;
+            margin-top: 10px;
         }
 
         .option {
@@ -52,31 +61,208 @@
 <body>
 
     <div class="quiz-container">
-        <div class="question" id="questionone">
-            <h2>Question 1: What is spam?</h2>
-            <ul class="options">
-                <li class="option"><input type="radio" name="q1" value="a"> a) Unwanted Emails</li>
-                <li class="option"><input type="radio" name="q1" value="b"> b) A Type of Scam</li>
-                <li class="option"><input type="radio" name="q1" value="c"> c) A Video Game</li>
-            </ul>
-        </div>
+        <div class="question-grid">
+            <!-- Question 1 -->
+            <div class="question" id="questionone">
+                <h2>Question 1: What is phishing?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q1" value="a"> a) Sending deceptive emails to trick individuals into revealing personal information</li>
+                    <li class="option"><input type="radio" name="q1" value="b"> b) A type of fishing sport</li>
+                    <li class="option"><input type="radio" name="q1" value="c"> c) A method of cooking</li>
+                </ul>
+            </div>
 
-        <div class="question" id="questiontwo">
-            <h2>Question 2: What is the point of Social Engineering?</h2>
-            <ul class="options">
-                <li class="option"><input type="radio" name="q2" value="a"> a) To trick you into giving info</li>
-                <li class="option"><input type="radio" name="q2" value="b"> b) To sell you stuff</li>
-                <li class="option"><input type="radio" name="q2" value="c"> c) To fix your computer</li>
-            </ul>
-        </div>
+            <!-- Question 2 -->
+            <div class="question" id="questiontwo">
+                <h2>Question 2: What is pretexting?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q2" value="a"> a) Creating a false pretext to obtain sensitive information</li>
+                    <li class="option"><input type="radio" name="q2" value="b"> b) A type of gardening technique</li>
+                    <li class="option"><input type="radio" name="q2" value="c"> c) A form of exercise</li>
+                </ul>
+            </div>
 
-        <div class="question" id="questionthree">
-            <h2>Question 3: Why is it a good idea to give less personal info online?</h2>
-            <ul class="options">
-                <li class="option"><input type="radio" name="q3" value="a"> a) Hackers have less ways to attack you </li>
-                <li class="option"><input type="radio" name="q3" value="b"> b) You can hack more people</li>
-                <li class="option"><input type="radio" name="q3" value="c"> c) There is no reason to do this</li>
-            </ul>
+            <!-- Question 3 -->
+            <div class="question" id="questionthree">
+                <h2>Question 3: What is tailgating?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q3" value="a"> a) Following closely behind someone to gain unauthorized access</li>
+                    <li class="option"><input type="radio" name="q3" value="b"> b) A type of vehicle</li>
+                    <li class="option"><input type="radio" name="q3" value="c"> c) A cooking utensil</li>
+                </ul>
+            </div>
+
+            <!-- Add more questions here with the same format -->
+            <!-- Question 4 -->
+            <div class="question" id="questionfour">
+                <h2>Question 4: What is baiting?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q4" value="a"> a) Offering something enticing to deceive individuals</li>
+                    <li class="option"><input type="radio" name="q4" value="b"> b) A type of fishing lure</li>
+                    <li class="option"><input type="radio" name="q4" value="c"> c) A form of transportation</li>
+                </ul>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question" id="questionfive">
+                <h2>Question 5: What is quid pro quo?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q5" value="a"> a) Offering a favor or service in exchange for information</li>
+                    <li class="option"><input type="radio" name="q5" value="b"> b) A type of negotiation tactic</li>
+                    <li class="option"><input type="radio" name="q5" value="c"> c) A type of currency</li>
+                </ul>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question" id="questionsix">
+                <h2>Question 6: What is social engineering?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q6" value="a"> a) Psychological manipulation of people into performing actions or divulging confidential information</li>
+                    <li class="option"><input type="radio" name="q6" value="b"> b) A type of computer virus</li>
+                    <li class="option"><input type="radio" name="q6" value="c"> c) A type of social media platform</li>
+                </ul>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question" id="questionseven">
+                <h2>Question 7: What is two-factor authentication (2FA)?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q7" value="a"> a) A security measure that requires two different forms of identification to access an account</li>
+                    <li class="option"><input type="radio" name="q7" value="b"> b) A method of sending emails</li>
+                    <li class="option"><input type="radio" name="q7" value="c"> c) A type of firewall</li>
+                </ul>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question" id="questioneight">
+                <h2>Question 8: What is a VPN (Virtual Private Network)?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q8" value="a"> a) A secure network connection that allows you to access the internet privately</li>
+                    <li class="option"><input type="radio" name="q8" value="b"> b) A type of computer virus</li>
+                    <li class="option"><input type="radio" name="q8" value="c"> c) A type of website</li>
+                </ul>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question" id="questionnine">
+                <h2>Question 9: What is ransomware?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q9" value="a"> a) Malicious software that encrypts files and demands payment for their release</li>
+                    <li class="option"><input type="radio" name="q9" value="b"> b) A type of encryption method</li>
+                    <li class="option"><input type="radio" name="q9" value="c"> c) A type of social media platform</li>
+                </ul>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question" id="questionten">
+                <h2>Question 10: What is a firewall?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q10" value="a"> a) A security system that monitors and controls incoming and outgoing network traffic</li>
+                    <li class="option"><input type="radio" name="q10" value="b"> b) A type of wall in a building</li>
+                    <li class="option"><input type="radio" name="q10" value="c"> c) A type of email filter</li>
+                </ul>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question" id="questioneleven">
+                <h2>Question 11: What is a botnet?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q11" value="a"> a) A network of compromised computers controlled by a single entity</li>
+                    <li class="option"><input type="radio" name="q11" value="b"> b) A type of robot</li>
+                    <li class="option"><input type="radio" name="q11" value="c"> c) A type of email</li>
+                </ul>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question" id="questiontwelve">
+                <h2>Question 12: What is malware?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q12" value="a"> a) Malicious software designed to harm or exploit computer systems</li>
+                    <li class="option"><input type="radio" name="q12" value="b"> b) A type of computer hardware</li>
+                    <li class="option"><input type="radio" name="q12" value="c"> c) A type of food</li>
+                </ul>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question" id="questionthirteen">
+                <h2>Question 13: What is social engineering?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q13" value="a"> a) Psychological manipulation of people into performing actions or divulging confidential information</li>
+                    <li class="option"><input type="radio" name="q13" value="b"> b) A type of computer virus</li>
+                    <li class="option"><input type="radio" name="q13" value="c"> c) A type of social media platform</li>
+                </ul>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question" id="questionfourteen">
+                <h2>Question 14: What is pretexting?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q14" value="a"> a) Creating a false pretext to obtain sensitive information</li>
+                    <li class="option"><input type="radio" name="q14" value="b"> b) A type of gardening technique</li>
+                    <li class="option"><input type="radio" name="q14" value="c"> c) A form of exercise</li>
+                </ul>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question" id="questionfifteen">
+                <h2>Question 15: What is tailgating?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q15" value="a"> a) Following closely behind someone to gain unauthorized access</li>
+                    <li class="option"><input type="radio" name="q15" value="b"> b) A type of vehicle</li>
+                    <li class="option"><input type="radio" name="q15" value="c"> c) A cooking utensil</li>
+                </ul>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question" id="questionsixteen">
+                <h2>Question 16: What is baiting?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q16" value="a"> a) Offering something enticing to deceive individuals</li>
+                    <li class="option"><input type="radio" name="q16" value="b"> b) A type of fishing lure</li>
+                    <li class="option"><input type="radio" name="q16" value="c"> c) A form of transportation</li>
+                </ul>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question" id="questionseventeen">
+                <h2>Question 17: What is quid pro quo?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q17" value="a"> a) Offering a favor or service in exchange for information</li>
+                    <li class="option"><input type="radio" name="q17" value="b"> b) A type of negotiation tactic</li>
+                    <li class="option"><input type="radio" name="q17" value="c"> c) A type of currency</li>
+                </ul>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question" id="questioneighteen">
+                <h2>Question 18: What is pretexting?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q18" value="a"> a) Creating a false pretext to obtain sensitive information</li>
+                    <li class="option"><input type="radio" name="q18" value="b"> b) A type of gardening technique</li>
+                    <li class="option"><input type="radio" name="q18" value="c"> c) A form of exercise</li>
+                </ul>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question" id="questionnineteen">
+                <h2>Question 19: What is tailgating?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q19" value="a"> a) Following closely behind someone to gain unauthorized access</li>
+                    <li class="option"><input type="radio" name="q19" value="b"> b) A type of vehicle</li>
+                    <li class="option"><input type="radio" name="q19" value="c"> c) A cooking utensil</li>
+                </ul>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question" id="questiontwenty">
+                <h2>Question 20: What is baiting?</h2>
+                <ul class="options">
+                    <li class="option"><input type="radio" name="q20" value="a"> a) Offering something enticing to deceive individuals</li>
+                    <li class="option"><input type="radio" name="q20" value="b"> b) A type of fishing lure</li>
+                    <li class="option"><input type="radio" name="q20" value="c"> c) A form of transportation</li>
+                </ul>
+            </div>
+
         </div>
 
         <button onclick="submitQuiz()">Submit Answers</button>
@@ -109,7 +295,7 @@
 
             async function getCorrectAnswer(questionId) {
                 try {
-                    
+                    // Simulating the retrieval of correct answers from a database
                     const result = { items: [{ correctAnswer: 'a' }] };
                     const correctAnswer = result.items[0].correctAnswer;
                     return correctAnswer;
