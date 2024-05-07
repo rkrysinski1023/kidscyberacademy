@@ -75,7 +75,7 @@
         async function getCorrectAnswerFromDatabase(questionId) {
             try {
                 // Fetch correct answer from Wix backend database
-                const response = await fetch(`backend-url/quiz/${questionId}`); // Replace 'backend-url' with your actual backend URL
+                const response = await fetch(`backend-url/quiz/${questionId}`); 
                 const data = await response.json();
                 return data.correctAnswer;
             } catch (error) {
@@ -86,7 +86,7 @@
 
         async function recordScore(correctAnswers, incorrectAnswers) {
             try {
-                const response = await fetch('backend-url/answers', { // Replace 'backend-url' with your actual backend URL
+                const response = await fetch('backend-url/answers', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
