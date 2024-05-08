@@ -8,7 +8,7 @@ $w.onReady(async function () {
         const member = await currentMember.getMember();
 
         if (member) {
-            $w('#missionComplete').onClick(async () => {
+            $w('#passwordLessonComplete').onClick(async () => {
                 try {
                     const student = await wixData.query("MainDatabase")
                         .eq("email", member.loginEmail)
@@ -21,7 +21,7 @@ $w.onReady(async function () {
                             .then((item) => {
 
                                 item.l3Complete = true;
-                                
+								
                                 wixData.update("MainDatabase", item);
                                 console.log("Item updated successfully");
 

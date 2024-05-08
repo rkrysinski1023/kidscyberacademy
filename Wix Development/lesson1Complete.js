@@ -19,9 +19,7 @@ $w.onReady(async function () {
                         const itemId = student.items[0]._id;
                         wixData.get("MainDatabase", itemId)
                             .then((item) => {
-
                                 item.l1Complete = true;
-                                
                                 wixData.update("MainDatabase", item);
                                 console.log("Item updated successfully");
 

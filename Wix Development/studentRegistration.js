@@ -1,5 +1,5 @@
 //Written by James Looney
-//Teacher Registration
+//Student Registration
 
 import { authentication } from 'wix-members';
 import wixData from 'wix-data';
@@ -50,6 +50,7 @@ const passwordChecker = (passwordInput) =>{
         const email = $w("#email").value;
         const password = $w("#password").value;
         const cPassword = $w("#cPassword").value;
+        const school = $w("#schoolInput").value;
         const options = {
             "contactInfo": {
                 "firstName": fName,
@@ -72,7 +73,8 @@ const passwordChecker = (passwordInput) =>{
             "lastName": $w('#lName').value,
             "email": $w('#email').value,
             "password":$w("#cPassword").value,
-            "isStudent": true
+            "isStudent": true,
+            "school": $w("#schoolInput").value
 
         }
 
