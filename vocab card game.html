@@ -1,5 +1,6 @@
 <!-- Made Ny Kyle Johnson Flash card system-->
-<!--Has a set list of vocaba that the user can flip through-->
+<!--Has a set list of vocab that the user can flip through-->
+<!--CSS Styling for the cards, background, buttons, etc. -->
 <style type ="text/css">
 .memory-game {
   display: flex;
@@ -70,9 +71,11 @@
 
 </style>>
 
+<!--HTML Containers for all the definitions and terms -->
 <body style="background-color: #281a39;">
   <div class="memory-game">
     <div class="card-container">
+
       <button class="card" data-term="Caesar Cipher">
         <div class="card-inner">
           <div class="card-front">Caesar Cipher</div>
@@ -118,31 +121,32 @@
 </body>
 
   <script>
-const cards = document.querySelectorAll('.card');
-const cardContainer = document.querySelector('.card-container');
-const nextButton = document.getElementById('next-btn');
-let currentIndex = 0;
+
+//JS for the flipping motion, clicking of the cards, and displaying whats on the cards    
+const cards=document.querySelectorAll('.card');
+const cardContainer=document.querySelector('.card-container');
+const nextButton=document.getElementById('next-btn');
+let currentList=0;
 
 //index of cards
-cards.forEach((card, index) => {
-  if (index !== currentIndex) {
-    card.style.display = 'none';
+cards.forEach((card, index)=>{
+  if (index!==currentList){
+    card.style.display='none';
   }
 });
 
 //a simple button th toggle the next card
-nextButton.addEventListener('click', () => {
-  cards[currentIndex].style.display = 'none';
-  currentIndex = (currentIndex + 1) % cards.length;
-  cards[currentIndex].style.display = 'block';
+nextButton.addEventListener('click',()=>{
+  cards[currentList].style.display='none';
+  currentList=(currentList+1)%cards.length;
+  cards[currentList].style.display='block';
 });
 
 //Allows the user to click on the card and flip it
 
-cards.forEach(card => {
-  card.addEventListener('click', () => {
+cards.forEach(card =>{
+  card.addEventListener('click',()=>{
     card.classList.toggle('is-flipped');
   });
 });
   </script>
-
