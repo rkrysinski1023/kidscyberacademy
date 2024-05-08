@@ -1,0 +1,24 @@
+//Written by James to find Badge IDs
+
+import { badges } from 'wix-members-backend';
+
+export function myListMemberBadgesFunction() {
+  const memberIds = [
+    //"1099e72f-1212-446b-990a-6055f4382a95",
+    // "62508d61-3ce8-4f81-a597-9d04226e27c2",
+    // "8c5ac767-4ddf-419c-9827-601e512ffbb2",
+    "a724fcde-3e73-4b32-abfb-3bdee158b9d2"
+
+  ];
+
+  return badges.listMemberBadges(memberIds)
+    .then((memberBadges) => {
+      const firstMemberBadges = memberBadges[0].badgeIds;
+      console.log(firstMemberBadges);
+      return memberBadges;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+

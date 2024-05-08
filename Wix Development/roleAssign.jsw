@@ -1,5 +1,4 @@
-//Written by James Looney
-//https://www.wix.com/velo/reference/wix-members-backend/authorization/removerole
+//Written by James
 import { authorization } from 'wix-members-backend';
 
 export function assignRole(roleId, memberId) {
@@ -20,7 +19,7 @@ export function assignRole(roleId, memberId) {
 
 export function removeRole(roleId, memberId) {
   const options = {
-    suppressAuth: false
+    suppressAuth: true
   };
 
   return authorization.removeRole(roleId, memberId, options)

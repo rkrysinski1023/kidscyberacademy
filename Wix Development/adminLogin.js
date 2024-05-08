@@ -12,28 +12,31 @@ $w.onReady(function () {
         const password = $w("#password").value;
 
         try {
-            const studentInfo = await wixData.query("MainDatabase").eq("email", email).find();
+            const adminInfo = await wixData.query("MainDatabase").eq("email", email).find();
 
-            if (studentInfo.items.length > 0 && studentInfo.items[0].isStudent === true) {
-                console.log("Student login success");
+            if (adminInfo.items.length > 0 && adminInfo.items[0].isAdmin === true) {
+                console.log("Admin login success");
                 const memberIsLoggedIn = await authentication.login(email, password);
                 console.log(memberIsLoggedIn);
                 console.log("Success");
 
                 setTimeout(() => {
-                    wixLocation.to("/studentdashboard");
+                    wixLocation.to("/admindashboard");
                 }, 2000);
             } else {
-                console.log("Student login unsuccessful");
-                $w("#loginErrorMessage").text = "There was an error, please try again";
+                console.log("Admin login unsuccessful");
+                $w("#loginErrormessage").text = "There was an error, please try again";
                 console.log("Before showing error message");
-                $w("#loginErrorMessage").show();
+                $w("#loginErrormessage").show();
                 console.log("After showing error message");
             }
+
         } catch (error) {
             console.log(error);
-            $w("#loginErrorMessage").text = "There was an error, please try again";
+            $w("#loginErrormessage").text = "There was an error, please try again";            
+
         }
     }
+
     $w("#loginButton").onClick(loginMember);
 });
