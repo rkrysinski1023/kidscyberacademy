@@ -44,6 +44,77 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+        async function submitQuiz() {
+            const questions = document.querySelectorAll('.question');
+            let correctAnswers = 0;
+            let incorrectAnswers = 0;
+
+            for (const question of questions) {
+                const selectedOption = question.querySelector('input:checked');
+                if (selectedOption) {
+                    const questionId = selectedOption.name.slice(1); // Remove the 'q' prefix
+                    const correctAnswer = await getCorrectAnswerFromDatabase(questionId);
+
+                    if (selectedOption.value.toLowerCase() === correctAnswer.toLowerCase()) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                    }
+                }
+            }
+
+            recordScore(correctAnswers, incorrectAnswers); // Record the score to the database
+            alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
+            displayChart(correctAnswers, incorrectAnswers);
+        }
+
+        async function getCorrectAnswerFromDatabase(questionId) {
+            try {
+                const response = await fetch(`backend-url/quiz/${questionId}`); 
+                const data = await response.json();
+                return data.correctAnswer;
+            } catch (error) {
+                console.error("Error fetching correct answer:", error);
+                return null;
+            }
+        }
+
+        async function recordScore(correctAnswers, incorrectAnswers) {
+            try {
+                const response = await fetch('backend-url/answers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ correctAnswers, incorrectAnswers })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to record score');
+                }
+
+                console.log("Score recorded successfully.");
+            } catch (error) {
+                console.error("Error recording score:", error);
+            }
+        }
+
+        function displayChart(correctAnswers, incorrectAnswers) {
+            const ctx = document.getElementById('quizChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Correct Answers', 'Incorrect Answers'],
+                    datasets: [{
+                        data: [correctAnswers, incorrectAnswers],
+                        backgroundColor: ['#4CAF50', '#FF5733']
+                    }]
+                }
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -151,6 +222,107 @@
             </select>
         </div>
 
+        <div class="question" id="question11">
+    <h2>Question 11: What is the primary purpose of a firewall in network security?</h2>
+    <select id="q11">
+        <option value="">Select your answer</option>
+        <option value="a">a) To monitor and control incoming and outgoing network traffic</option>
+        <option value="b">b) To increase internet speed</option>
+        <option value="c">c) To detect and remove viruses from computers</option>
+    </select>
+        </div>
+        
+        <div class="question" id="question12">
+            <h2>Question 12: What does DNS stand for in the context of networking?</h2>
+            <select id="q12">
+                <option value="">Select your answer</option>
+                <option value="a">a) Domain Name System</option>
+                <option value="b">b) Digital Network Security</option>
+                <option value="c">c) Dynamic Network Services</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question13">
+            <h2>Question 13: What is the purpose of two-factor authentication (2FA) in online security?</h2>
+            <select id="q13">
+                <option value="">Select your answer</option>
+                <option value="a">a) To add an extra layer of security by requiring two forms of identification</option>
+                <option value="b">b) To reduce internet speed</option>
+                <option value="c">c) To block unwanted websites</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question14">
+            <h2>Question 14: What is a common method for securing wireless networks?</h2>
+            <select id="q14">
+                <option value="">Select your answer</option>
+                <option value="a">a) WPA2 encryption</option>
+                <option value="b">b) Increasing network bandwidth</option>
+                <option value="c">c) Disabling firewalls</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question15">
+            <h2>Question 15: What is the primary purpose of an Intrusion Detection System (IDS)?</h2>
+            <select id="q15">
+                <option value="">Select your answer</option>
+                <option value="a">a) To detect and respond to unauthorized access attempts</option>
+                <option value="b">b) To increase network speed</option>
+                <option value="c">c) To block legitimate users from accessing the network</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question16">
+            <h2>Question 16: What does the term "phishing" refer to in cybersecurity?</h2>
+            <select id="q16">
+                <option value="">Select your answer</option>
+                <option value="a">a) A type of social engineering attack where attackers attempt to deceive users into providing sensitive information</option>
+                <option value="b">b) A type of network protocol</option>
+                <option value="c">c) A method to increase network bandwidth</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question17">
+            <h2>Question 17: What is the purpose of network segmentation?</h2>
+            <select id="q17">
+                <option value="">Select your answer</option>
+                <option value="a">a) To divide a network into smaller subnetworks for security and performance reasons</option>
+                <option value="b">b) To decrease internet speed</option>
+                <option value="c">c) To increase network congestion</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question18">
+            <h2>Question 18: What is a DDoS attack?</h2>
+            <select id="q18">
+                <option value="">Select your answer</option>
+                <option value="a">a) A type of cyber attack where multiple compromised computers are used to flood a target system with traffic</option>
+                <option value="b">b) A type of encryption protocol</option>
+                <option value="c">c) A method to increase network security</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question19">
+            <h2>Question 19: What is the purpose of a proxy server?</h2>
+            <select id="q19">
+                <option value="">Select your answer</option>
+                <option value="a">a) To act as an intermediary between clients and servers, providing additional security and anonymity</option>
+                <option value="b">b) To decrease network bandwidth</option>
+                <option value="c">c) To block access to specific websites</option>
+            </select>
+        </div>
+        
+        <div class="question" id="question20">
+            <h2>Question 20: What does VPN encryption protect against?</h2>
+            <select id="q20">
+                <option value="">Select your answer</option>
+                <option value="a">a) Eavesdropping and data interception</option>
+                <option value="b">b) Blocking unwanted websites</option>
+                <option value="c">c) Increasing internet speed</option>
+            </select>
+        </div>
+
+
         <!-- Add more questions here with the same format -->
 
         <!-- Button to submit answers -->
@@ -158,65 +330,6 @@
 
         <!-- Chart to display quiz results -->
         <canvas id="quizChart"></canvas>
-
-        <!-- JavaScript code -->
-        <script>
-            async function submitQuiz() {
-                const questions = document.querySelectorAll('.question');
-                let correctAnswers = 0;
-                let incorrectAnswers = 0;
-
-                questions.forEach(question => {
-                    const selectedOption = question.querySelector('select').value;
-                    if (selectedOption) {
-                        const questionId = question.id.slice(8); // Remove the 'question' prefix
-                        const correctAnswer = getCorrectAnswer(questionId);
-
-                        if (selectedOption === correctAnswer) {
-                            correctAnswers++;
-                        } else {
-                            incorrectAnswers++;
-                        }
-                    }
-                });
-
-                alert(`Correct Answers: ${correctAnswers}\nIncorrect Answers: ${incorrectAnswers}`);
-                displayChart(correctAnswers, incorrectAnswers);
-            }
-
-            function getCorrectAnswer(questionId) {
-                // Simulated correct answers
-                const correctAnswers = {
-                    "1": "a",
-                    "2": "a",
-                    "3": "a",
-                    "4": "a",
-                    "5": "a",
-                    "6": "a",
-                    "7": "a",
-                    "8": "a",
-                    "9": "a",
-                    "10": "a"
-                    // Add more correct answers here
-                };
-                return correctAnswers[questionId];
-            }
-
-            function displayChart(correctAnswers, incorrectAnswers) {
-                const ctx = document.getElementById('quizChart').getContext('2d');
-
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: ['Correct Answers', 'Incorrect Answers'],
-                        datasets: [{
-                            data: [correctAnswers, incorrectAnswers],
-                            backgroundColor: ['#4CAF50', '#FF5733']
-                        }]
-                    }
-                });
-            }
-        </script>
     </div>
 
 </body>
