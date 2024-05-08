@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Social Engineering Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff86b;
+        }
+        #chat {
+            width: 100%;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid ghostwhite;
+            border-radius: 5px;
+            text-align: center;
+
+        }
+        button {
+            margin: 10px;
+            padding: 8px 16px;
+            font-size: 20px;
+            cursor: pointer;
+            background: #154051;
+            color: ghostwhite;
+        }
+        button:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat">
+        <p id="ComputerChat">Computer Chat Here</p>
+        <button id="response1">Response 1</button>
+        <button id="response2">Response 2</button>
+        <button id="response3">Response 3</button>
+    </div>
+    <script>
+        const chat=[
+            {
+                computer: "Hi, I'm from email support. Can you please give me your Username and Password?",
+                responses: [
+                    "Sure, here you go. Enjoy!.",
+                    "Sorry, I can't tell you that. How about I call email support or have an adult do it",
+                    "Sorry, I don't feel safe giving you that information. Could you show me something to prove who you are?"
+                ],
+                correctList: 2
+            },
+            {
+                computer: "Yo, I found this free USB. Lets plug it into a computer and see whats on it!",
+                responses: [
+                    "Sure, lets do it!",
+                    "No, that doesn't seem safe. We should just leave it or give it to an adult",
+                    "Sorry, the school says we should only plug in our own USB's and not random ones."
+                ],
+                correctList: 2
+            },
+            {
+                computer: "Free V-Bucks: Click here for downloads",
+                responses: [
+                    "Awesome *click*",
+                    "Send the email to your friends so they can get free V-bucks",
+                    "Inform someone you trust, delete it or ignore it"
+
+                ],
+                correctList: 2
+            }
+        ];
+
+        let currentChat=0;
+        let correctResponses=0;
+        let numOfQuestions=chat.length;
+
+        function displayChat(){
+            const computerChat=document.getElementById("ComputerChat");
+            computerChat.textContent=chat[currentChat].computer;
+
+            const responses=chat[currentChat].responses;
+            for (let i=0;i<responses.length;i++){
+                const resButton=document.getElementById(`response${i+1}`);
+                resButton.textContent=responses[i];
+                resButton.onclick=function(){
+                    checkResponse(i);
+                };
+            }
+        }
+
+        function checkResponse(responseList){
+            const correctList=chat[currentChat].correctList;
+            if (responseList===correctList){
+                correctResponses++;
+            }
+
+            currentChat++;
+            if (currentChat<chat.length){
+                displayChat();
+            } else{
+                displayGrade();
+            }
+        }
+
+        function displayGrade(){
+            alert(`Your grade: ${correctResponses}/${numOfQuestions}`);
+        }
+
+        displayChat();
+    </script>
+</body>
+</html>
